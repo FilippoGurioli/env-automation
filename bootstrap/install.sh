@@ -86,8 +86,11 @@ if [ ${#OTHER_DISKS[@]} -eq 0 ]; then
 	warning "No other disks found - skipping"
 else
 	for disk in "${OTHER_DISKS[@]}"; do
+		info "Assigning mount points for $disk"
 		DISK_PATH="/dev/$disk"
+		info "Disk path: $DISK_PATH"
 		PARTITIONS=$(lsblk -nrpo NAME "$DISK_PATH" | grep -v "$DISK_PATH")
+		info "Partitions found: $PARTITIONS"
 		if [ -z "$PARTITIONS" ]; then
 			warning "No partitions on $disk - skipping"
 			continue
@@ -95,8 +98,11 @@ else
 
 		for part in $PARTITIONS; do
 			PART_NAME=$(basename "$part")
+			info "Mounting partition $part to /mnt/$PART_NAME"
 			MOUNT_DIR="/mnt/$PART_NAME"
+			info "Creating mount point $MOUNT_DIR"
 			mkdir -p "$MOUNT_DIR"
+			info "Mounting $part to $MOUNT_DIR"
 			mount "$part" "$MOUNT_DIR" || warning "Failed to mount $part"
 			info "Mounted $part"
 		done
