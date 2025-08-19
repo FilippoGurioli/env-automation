@@ -27,7 +27,9 @@ else
 	VM_ENV=0
 fi
 
-info "ARCH CUSTOM INSTALL SCRIPT"
+
+
+info "ARCH BOOTSTRAP INSTALL SCRIPT"
 
 info "Updating system clock"
 timedatectl set-ntp true
@@ -105,7 +107,7 @@ info "Changing root to /mnt"
 cp ./chroot-commands.sh /mnt/
 arch-chroot /mnt /bin/bash /chroot-commands.sh "$1" "$2"
 
-info "MINIMAL INSTALLATION DONE"
+info "BOOTSTRAP DONE"
 info "Rebooting"
 umount -R /mnt
 reboot
