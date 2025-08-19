@@ -27,8 +27,6 @@ else
 	VM_ENV=0
 fi
 
-
-
 info "ARCH BOOTSTRAP INSTALL SCRIPT"
 
 info "Updating system clock"
@@ -113,6 +111,7 @@ info "Changing root to /mnt"
 cp ./chroot-commands.sh /mnt/
 arch-chroot /mnt /bin/bash /chroot-commands.sh "$@"
 
-info "BOOTSTRAP DONE"
+rm /mnt/chroot-commands.sh
+info "ARCH BOOTSTRAP DONE"
 umount -R /mnt
 exit 0

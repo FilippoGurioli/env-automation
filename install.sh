@@ -24,4 +24,6 @@ chmod +x /mnt/provision.sh
 
 arch-chroot /mnt /bin/bash /provision.sh
 
+rm /mnt/provision.sh
+
 reboot
