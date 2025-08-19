@@ -3,10 +3,10 @@ set -euo pipefail # fail fast strategy
 
 echo "Checking connectivity"
 if ! ping -c 1 -W 2 8.8.8.8 &> /dev/null; then
-	echo "No connection, aborting custom install, re-launch this script once there is connectivity"
+	echo "No connection, aborting bootstrap install, re-launch this script once there is connectivity"
 	return 1
 else
-	echo "Connected, starting custom install"
+	echo "Connected, starting bootstrap install"
 fi
 
 BASE_URL="https://raw.githubusercontent.com/FilippoGurioli/env-automation/dev/bootstrap"

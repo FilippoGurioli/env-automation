@@ -114,7 +114,5 @@ cp ./chroot-commands.sh /mnt/
 arch-chroot /mnt /bin/bash /chroot-commands.sh "$1" "$2"
 
 info "BOOTSTRAP DONE"
-info "Rebooting"
 umount -R /mnt
-reboot
 exit 0
