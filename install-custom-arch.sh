@@ -87,7 +87,7 @@ else
 		DISK_PATH="/dev/$disk"
 		PARTITIONS=$(lsblk -nrpo NAME "$DISK_PATH" | grep -v "$DISK_PATH")
 		if [ -z "$PARTITIONS" ]; then
-			echo "No partitions on $disk - skipping"
+			warning "No partitions on $disk - skipping"
 			continue
 		fi
 
