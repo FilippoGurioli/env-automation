@@ -17,3 +17,5 @@ curl -fsSL "$BASE_URL/bootstrap/chroot-commands.sh" -o chroot-commands.sh
 chmod +x ./bootstrap.sh
 
 ./bootstrap.sh $@
+
+#TODO: curl -fsSL "$BASE_URL/provision/install.sh" -o provision.sh
