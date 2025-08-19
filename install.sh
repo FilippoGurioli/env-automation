@@ -9,10 +9,10 @@ else
 	echo "Connected, starting bootstrap install"
 fi
 
-BASE_URL="https://raw.githubusercontent.com/FilippoGurioli/env-automation/dev/bootstrap"
+BASE_URL="https://raw.githubusercontent.com/FilippoGurioli/env-automation/dev"
 
-curl -fsSL "$BASE_URL/install.sh" -o bootstrap.sh
-curl -fsSL "$BASE_URL/chroot-commands.sh" -o chroot-commands.sh
+curl -fsSL "$BASE_URL/bootstrap/install.sh" -o bootstrap.sh
+curl -fsSL "$BASE_URL/bootstrap/chroot-commands.sh" -o chroot-commands.sh
 
 chmod +x ./bootstrap.sh
 

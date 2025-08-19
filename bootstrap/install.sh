@@ -15,8 +15,8 @@ error() { echo -e "[${RED}ERR${NC}] $*"; }
 set -euo pipefail # fail fast strategy
 
 # Checking if the hostname is provided as first parameter
-if [ $# -ne 2 ]; then
-	error "provide the host name as first parameter (e.g. desktop/laptop/...) and the root password as second"
+if [ $# -ne 3 ]; then
+	error "provide the host name as first parameter (e.g. desktop/laptop/...), the user name as second and the password as third (for both)"
 	exit 1
 fi
 
@@ -111,7 +111,7 @@ fi
 
 info "Changing root to /mnt"
 cp ./chroot-commands.sh /mnt/
-arch-chroot /mnt /bin/bash /chroot-commands.sh "$1" "$2"
+arch-chroot /mnt /bin/bash /chroot-commands.sh "$@"
 
 info "BOOTSTRAP DONE"
 umount -R /mnt

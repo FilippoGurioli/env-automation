@@ -7,4 +7,4 @@ if [ "$STATUS" != "active" ]; then
 	sudo systemctl enable --now libvirtd
 fi
 
-"$SCRIPT_DIR/lib/wipe-vm.sh" && "$SCRIPT_DIR/lib/build-vm.sh" && "$SCRIPT_DIR/lib/launch-install.sh" "$1" "$2" && "$SCRIPT_DIR/open-vm.sh"
+"$SCRIPT_DIR/lib/wipe-vm.sh" && "$SCRIPT_DIR/lib/build-vm.sh" && "$SCRIPT_DIR/lib/launch-install.sh" "$@" && "$SCRIPT_DIR/open-vm.sh"

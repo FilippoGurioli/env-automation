@@ -27,8 +27,16 @@ echo "127.0.0.1 localhost" > /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.1.1 $NAME.localdomain $NAME" >> /etc/hosts
 
-echo "Setting the root password to $2"
-echo "root:$2" | chpasswd
+echo "Setting the root password to $3"
+echo "root:$3" | chpasswd
+
+echo "Creating user '$2' with password '$3'"
+useradd -m -G wheel -s /bin/bash "$2"
+echo "$2:$3" | chpasswd
+
+echo "Enabling sudo for wheel group"
+echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
+chmod 440 /etc/sudoers.d/wheel
 
 echo "Installing bootloader"
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
