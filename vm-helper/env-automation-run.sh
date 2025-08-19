@@ -10,5 +10,6 @@ fi
 "$SCRIPT_DIR/lib/wipe-vm.sh" && "$SCRIPT_DIR/lib/build-vm.sh" && "$SCRIPT_DIR/lib/launch-install.sh" "$@"
 
 virsh shutdown arch
+sleep 5 # waiting to shutdown correctly
 virsh start arch
-./open-vm.sh
+"$SCRIPT_DIR/open-vm.sh"

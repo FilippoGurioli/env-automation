@@ -18,4 +18,10 @@ chmod +x ./bootstrap.sh
 
 ./bootstrap.sh $@
 
-#TODO: curl -fsSL "$BASE_URL/provision/install.sh" -o provision.sh
+curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
+
+chmod +x /mnt/provision.sh
+
+arch-chroot /mnt /bin/bash /provision.sh
+
+reboot
