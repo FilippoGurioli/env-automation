@@ -89,7 +89,7 @@ else
 		info "Assigning mount points for $disk"
 		DISK_PATH="/dev/$disk"
 		info "Disk path: $DISK_PATH"
-		PARTITIONS=$(lsblk -nrpo NAME "$DISK_PATH" | grep -v "$DISK_PATH")
+		PARTITIONS=$(lsblk -nrpo NAME "$DISK_PATH" | awk '$2=="part"{print $1}')
 		info "Partitions found: $PARTITIONS"
 		if [ -z "$PARTITIONS" ]; then
 			warning "No partitions on $disk - skipping"
