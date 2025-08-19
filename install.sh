@@ -9,7 +9,7 @@ else
 	echo "Connected, starting custom install"
 fi
 
-BASE_URL="https://raw.githubusercontent.com/FilippoGurioli/dotfiles/master/env-automation"
+BASE_URL="https://raw.githubusercontent.com/FilippoGurioli/env-automation/dev/"
 
 curl -fsSL "$BASE_URL/install-custom-arch.sh" -o install-custom-arch.sh
 curl -fsSL "$BASE_URL/chroot-commands.sh" -o chroot-commands.sh
