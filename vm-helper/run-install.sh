@@ -1,9 +1,10 @@
 #!/bin/bash
 
 STATUS=$(systemctl is-active libvirtd)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$STATUS" != "active" ]; then
 	sudo systemctl enable --now libvirtd
 fi
 
-./lib/wipe-vm.sh && ./lib/build-vm.sh && ./lib/launch-custom-install.sh $1 $2
+"$SCRIPT_DIR/lib/wipe-vm.sh" && "$SCRIPT_DIR/lib/build-vm.sh" && "$SCRIPT_DIR/lib/launch-custom-install.sh" "$1" "$2"
