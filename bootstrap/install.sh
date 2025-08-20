@@ -32,8 +32,8 @@ info "ARCH BOOTSTRAP INSTALL SCRIPT"
 info "Updating system clock"
 timedatectl set-ntp true
 
-info "Selecting the fastest 10 mirrors"
-sudo reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+#info "Selecting the fastest 10 mirrors"
+#sudo reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 info "Partitioning the disk"
 if [ $VM_ENV -eq 1 ]; then
