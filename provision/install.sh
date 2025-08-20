@@ -10,12 +10,11 @@ info() { echo -e "[${GREEN}INF${NC}] $*"; }
 warning() { echo -e "[${YELLOW}WARN${NC}] $*"; }
 error() { echo -e "[${RED}ERR${NC}] $*"; }
 
-# Function to check if a package is installed
+# Functions to check if a package is installed
 is_installed() {
   pacman -Qi "$1" &> /dev/null
 }
 
-# Function to check if a package is installed
 is_group_installed() {
   pacman -Qg "$1" &> /dev/null
 }
@@ -36,6 +35,17 @@ install_packages() {
     yay -S --noconfirm "${to_install[@]}"
   fi
 } 
+
+# Function to detect if the computer is a laptop
+is_laptop() {
+	if [[ -r /sys/class/dmi/id/chassis_type ]]; then
+		case "$(cat /sys/class/dmi/id/chassis_type)" in
+			8|9|10|14) return 0 ;;
+			*) return 1;;
+		esac
+	fi
+	return 1
+}
 
 ########### Some useful functions ##############
 
@@ -74,6 +84,45 @@ source /packages.conf
 
 info "Installing essential packages ..."
 install_packages "${ESSENTIALS[@]}"
+
+info "Installing drivers..."
+if rfkill list | grep -qi bluetooth || lsusb | grep -qi bluetooth || lspci | grep -qi bluetooth; then
+	info "Installing bluetooth drivers..."
+	install_packages "${BT_DRIVERS[@]}"
+else
+	info "No bluetooth hardware detected, skipping bt drivers installation"
+fi
+
+if ls /dev/video* &>/dev/null; then
+	info "Installing webcam drivers..."
+	install_packages "${WEBCAM_DRIVERS[@]}"
+else
+	info "No webcam hardware detected, skipping webcam drivers installation"
+fi
+
+GPU=$(lspci -nnk | grep -E "VGA|3D|Display" || true)
+
+if [[ -z "$GPU" ]]; then
+	info "No GPU detected, skipping gpu driver installation"
+else
+	info "GPU detected: $GPU"
+	if echo "$GPU" | grep -qi "Intel"; then
+		info "Installing Intel drivers..."
+		install_packages "${INTEL_GPU_DRIVERS[@]}"
+	elif echo "$GPU" | grep -qi "AMD|ATI"; then
+		info "Installing AMD drivers..."
+		install_packages "${AMD_GPU_DRIVERS[@]}"
+	elif echo "$GPU" | grep -qi "NVIDIA"; then
+		info "Installing NVIDIA drivers..."
+		install_packages "${NVIDIA_GPU_DRIVERS[@]}"
+	else
+		info "Unknown GPU vendor. Not installing any drivers"
+	fi
+fi
+
+if is_laptop; then
+	echo "Detected a laptop computer, installing laptop specific packages..."
+	install_packages "${LAPTOP[@]}"
 
 info "ARCH PROVISIONING DONE"
 
