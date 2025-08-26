@@ -112,6 +112,6 @@ cp ./chroot-commands.sh /mnt/
 arch-chroot /mnt /bin/bash /chroot-commands.sh "$@"
 
 rm /mnt/chroot-commands.sh
-info "ARCH BOOTSTRAP DONE"
 umount -R /mnt
+info "ARCH BOOTSTRAP DONE"
 exit 0
