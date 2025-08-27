@@ -53,9 +53,8 @@ set -euo pipefail # fail fast strategy
 
 USER="$2"
 
-sudo EDITOR=tee visudo -f /etc/sudoers.d/temp-pacman << EOF
-$USER ALL=(ALL) NOPASSWD: ALL
-EOF
+touch /etc/sudoers.d/temp-pacman
+echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/temp-pacman
 chmod 440 /etc/sudoers.d/temp-pacman
 
 info "ARCH PROVISIONING SCRIPT"
@@ -133,4 +132,4 @@ chmod +x /post-install.sh
 
 /post-install.sh
 
-sudo rm /etc/sudoers.d/temp-pacman
+rm /etc/sudoers.d/temp-pacman
