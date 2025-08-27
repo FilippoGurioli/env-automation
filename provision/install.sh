@@ -60,7 +60,7 @@ pacman -Syu --noconfirm
 
 if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
-  pacman -S --needed git base-devel --noconfirm
+  pacman -S --needed git base-devel go --noconfirm
   
   info "Building yay as user (without install)..."
   su - "$USER" -c '
@@ -133,5 +133,3 @@ curl -fsSL "$BASE_URL/post-install.sh" -o /post-install.sh
 chmod +x /post-install.sh
 
 /post-install.sh
-
-rm /etc/sudoers.d/temp-pacman
