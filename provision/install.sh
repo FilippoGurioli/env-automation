@@ -61,14 +61,20 @@ pacman -Syu --noconfirm
 if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
   pacman -S --needed git base-devel --noconfirm
+  
+  info "Building yay as user (without install)..."
   su - "$USER" -c '
       cd /tmp
       git clone https://aur.archlinux.org/yay.git
       cd yay
-      makepkg -si --noconfirm
-      cd ..
-      rm -rf yay
+      makepkg --noconfirm
   '
+  
+  info "Installing yay as root..."
+  pacman -U /tmp/yay/yay-*.pkg.tar.* --noconfirm
+  
+  info "Cleaning up..."
+  rm -rf /tmp/yay
 else
   info "yay is already installed"
 fi
