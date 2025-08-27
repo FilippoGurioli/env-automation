@@ -51,6 +51,9 @@ is_laptop() {
 
 set -euo pipefail # fail fast strategy
 
+USER="$2"
+PASSWORD="$3"
+
 info "ARCH PROVISIONING SCRIPT"
 
 info "Updating the system"
@@ -59,7 +62,7 @@ pacman -Syu --noconfirm
 if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
   pacman -S --needed git base-devel --noconfirm
-  sudo -u "$2" bash -c '
+  echo "$PASSWORD" | sudo -S -u "$USER" bash -c '
       cd /tmp
       git clone https://aur.archlinux.org/yay.git
       cd yay
