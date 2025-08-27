@@ -56,6 +56,7 @@ USER="$2"
 sudo EDITOR=tee visudo -f /etc/sudoers.d/temp-pacman << EOF
 $USER ALL=(ALL) NOPASSWD: ALL
 EOF
+chmod 440 /etc/sudoers.d/temp-pacman
 
 info "ARCH PROVISIONING SCRIPT"
 
