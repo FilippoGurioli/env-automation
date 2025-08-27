@@ -53,6 +53,10 @@ set -euo pipefail # fail fast strategy
 
 USER="$2"
 
+sudo EDITOR=tee visudo -f /etc/sudoers.d/temp-pacman << EOF
+$TARGET_USER ALL=(ALL) NOPASSWD: /usr/bin/pacman
+EOF
+
 info "ARCH PROVISIONING SCRIPT"
 
 info "Updating the system"
@@ -127,3 +131,5 @@ curl -fsSL "$BASE_URL/post-install.sh" -o /post-install.sh
 chmod +x /post-install.sh
 
 /post-install.sh
+
+sudo rm /etc/sudoers.d/temp-pacman
