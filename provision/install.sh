@@ -61,9 +61,8 @@ pacman -Syu --noconfirm
 if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
   pacman -S --needed git base-devel --noconfirm
-  echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/temp-nopasswd
-  chmod 440 /etc/sudoers.d/temp-nopasswd
-  sudo -S -u "$USER" bash -c '
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!! $3 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo "$3" | sudo -S -u "$USER" bash -c '
       cd /tmp
       git clone https://aur.archlinux.org/yay.git
       cd yay
@@ -71,7 +70,6 @@ if ! command -v yay &> /dev/null; then
       cd ..
       rm -rf yay
   '
-  rm /etc/sudoers.d/temp-nopasswd
 else
   info "yay is already installed"
 fi
