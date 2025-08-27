@@ -59,20 +59,14 @@ pacman -Syu --noconfirm
 if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
   pacman -S --needed git base-devel --noconfirm
-  if [[ ! -d "yay" ]]; then
-    info "Cloning yay repository..."
-  else
-    info "yay directory already exists, removing it..."
-    rm -rf yay
-  fi
-
-  git clone https://aur.archlinux.org/yay.git
-
-  cd yay
-  info "building yay..."
-  makepkg -si --noconfirm
-  cd ..
-  rm -rf yay
+  sudo -u "$2" bash -c '
+      cd /tmp
+      git clone https://aur.archlinux.org/yay.git
+      cd yay
+      makepkg -si --noconfirm
+      cd ..
+      rm -rf yay
+  '
 else
   info "yay is already installed"
 fi

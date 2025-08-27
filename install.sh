@@ -22,7 +22,7 @@ curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
 
 chmod +x /mnt/provision.sh
 
-arch-chroot /mnt /bin/bash /provision.sh
+arch-chroot /mnt /bin/bash /provision.sh $@
 
 rm /mnt/provision.sh
 
