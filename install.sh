@@ -26,4 +26,6 @@ arch-chroot /mnt /bin/bash /provision.sh
 
 rm /mnt/provision.sh
 
+umount -R /mnt
+
 reboot
