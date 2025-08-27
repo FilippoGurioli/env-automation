@@ -53,10 +53,6 @@ set -euo pipefail # fail fast strategy
 
 USER="$2"
 
-touch /etc/sudoers.d/temp-pacman
-echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/temp-pacman
-chmod 440 /etc/sudoers.d/temp-pacman
-
 info "ARCH PROVISIONING SCRIPT"
 
 info "Updating the system"
@@ -65,7 +61,7 @@ pacman -Syu --noconfirm
 if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
   pacman -S --needed git base-devel --noconfirm
-  sudo -u "$USER" bash -c '
+  su - "$USER" -c '
       cd /tmp
       git clone https://aur.archlinux.org/yay.git
       cd yay
