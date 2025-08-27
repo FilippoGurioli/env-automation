@@ -74,7 +74,7 @@ mkdir -p /mnt/boot
 mount "$EFI_PART" /mnt/boot
 
 info "Installing base functionalities"
-pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr vim
+pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr vim sudo
 
 info "Generating file systems table"
 genfstab -U /mnt >> /mnt/etc/fstab
