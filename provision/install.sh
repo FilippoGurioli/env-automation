@@ -65,7 +65,7 @@ pacman -Syu --noconfirm
 if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
   pacman -S --needed git base-devel --noconfirm
-  echo "$3" | sudo -S -u "$USER" bash -c '
+  sudo -u "$USER" bash -c '
       cd /tmp
       git clone https://aur.archlinux.org/yay.git
       cd yay
