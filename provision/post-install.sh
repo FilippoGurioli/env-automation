@@ -21,16 +21,10 @@ enable_if_present() {
 echo "POST INSTALL SCRIPT"
 
 info "Adding user to necessary groups..."
-usermod -aG wheel $1
 usermod -aG docker $1
 usermod -aG video $1
 usermod -aG audio $1
 usermod -aG input $1
-
-if ! grep -q '^%wheel ALL=(ALL:ALL) ALL' /etc/sudoers; then
-    info "Enabling wheel group in sudoers (password required)..."
-    sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-fi
 
 info "Enabling services..."
 systemctl enable NetworkManager

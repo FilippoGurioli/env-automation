@@ -33,7 +33,7 @@ info "Updating system clock"
 timedatectl set-ntp true
 
 #info "Selecting the fastest 10 mirrors"
-#sudo reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+sudo reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 info "Partitioning the disk"
 if [ $VM_ENV -eq 1 ]; then
@@ -74,7 +74,7 @@ mkdir -p /mnt/boot
 mount "$EFI_PART" /mnt/boot
 
 info "Installing base functionalities"
-pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr vim
+pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr vim sudo
 
 info "Generating file systems table"
 genfstab -U /mnt >> /mnt/etc/fstab

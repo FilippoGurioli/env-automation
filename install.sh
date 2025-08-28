@@ -18,14 +18,20 @@ chmod +x ./bootstrap.sh
 
 ./bootstrap.sh $@
 
-curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
+USER="$2"
 
-chmod +x /mnt/provision.sh
+curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/home/$USER/provision.sh
+chmod +x /mnt/home/$USER/provision.sh
+arch-chroot /mnt chown "$USER:$USER" "/home/$USER/provision.sh"
 
-arch-chroot /mnt /bin/bash /provision.sh $@
+arch-chroot /mnt runuser -l "$USER" -c "sudo /home/$USER/provision.sh $@"
 
-rm /mnt/provision.sh
+rm /mnt/home/$USER/provision.sh
 
 umount -R /mnt
 
-reboot
+if grep -qEi 'qemu|vmware|virtualbox|kvm' /sys/class/dmi/id/sys_vendor 2>/dev/null; then
+	echo "VM detected, not rebooting."
+else
+	reboot
+fi

@@ -63,12 +63,12 @@ if ! command -v yay &> /dev/null; then
   pacman -S --needed git base-devel go --noconfirm
   
   info "Building yay as user..."
-  su - "$USER" -c '
+#   su - "$USER" -c '
       cd /tmp
       git clone https://aur.archlinux.org/yay.git
       cd yay
       makepkg --noconfirm
-  '
+#   '
   
   info "Installing yay as root..."
   pacman -U /tmp/yay/yay-*.pkg.tar.* --noconfirm
