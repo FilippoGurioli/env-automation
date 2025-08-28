@@ -62,7 +62,7 @@ if ! command -v yay &> /dev/null; then
   info "Installing yay AUR helper..."
   pacman -S --needed git base-devel go --noconfirm
   
-  info "Building yay as user (without install)..."
+  info "Building yay as user..."
   su - "$USER" -c '
       cd /tmp
       git clone https://aur.archlinux.org/yay.git
