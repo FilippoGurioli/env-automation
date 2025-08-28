@@ -88,6 +88,8 @@ info "Installing essential packages ..."
 install_packages "${ESSENTIALS[@]}"
 
 info "Installing oh-my-zsh..."
+export RUNZSH=no   # don’t launch zsh after install
+export CHSH=no     # don’t change your default shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 info "Installing Powerlevel 10k..."
