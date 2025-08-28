@@ -87,6 +87,12 @@ source /packages.conf
 info "Installing essential packages ..."
 install_packages "${ESSENTIALS[@]}"
 
+info "Installing oh-my-zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+info "Installing Powerlevel 10k..."
+install_packages "powerlevel10k"
+
 info "Installing drivers..."
 if rfkill list | grep -qi bluetooth || lsusb | grep -qi bluetooth || lspci | grep -qi bluetooth; then
 	info "Installing bluetooth drivers..."
