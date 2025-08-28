@@ -140,6 +140,6 @@ info "ARCH PROVISIONING DONE"
 curl -fsSL "$BASE_URL/post-install.sh" -o /post-install.sh
 chmod +x /post-install.sh
 
-/post-install.sh
+/post-install.sh $@
 
 rm /post-install.sh
