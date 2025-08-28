@@ -105,7 +105,7 @@ fi
 GPU=$(lspci -nnk | grep -E "VGA|3D|Display" || true)
 
 if [[ -z "$GPU" ]]; then
-	info "No GPU detected, skipping gpu driver installation"
+	warning "No GPU detected, skipping gpu driver installation"
 else
 	info "GPU detected: $GPU"
 	if echo "$GPU" | grep -qi "Intel"; then
@@ -133,3 +133,5 @@ curl -fsSL "$BASE_URL/post-install.sh" -o /post-install.sh
 chmod +x /post-install.sh
 
 /post-install.sh
+
+rm /post-install.sh
