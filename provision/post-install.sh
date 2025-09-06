@@ -25,6 +25,17 @@ run_as_user() {
 USER=$2
 
 echo "POST INSTALL SCRIPT"
+
+info "Installing oh-my-zsh..."
+run_as_user 'export RUNZSH=no CHSH=no && sh -c "$(curl -fsSL $BASE_URL/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+
+info "Installing Powerlevel 10k..."
+yay powerlevel10k --noconfirm
+
+
+info "Selecting the fastest 10 mirrors..."
+sudo reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
 info "Setting sudo insults..."
 # Check if the line exists (commented or not), if not add it
 grep -q "^[[:space:]]*#*[[:space:]]*Defaults[[:space:]]\+insults" /etc/sudoers || echo "Defaults insults" >> /etc/sudoers

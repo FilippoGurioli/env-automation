@@ -32,7 +32,7 @@ install_packages() {
 
   if [ ${#to_install[@]} -ne 0 ]; then
     echo "Installing: ${to_install[*]}"
-    run_as_user "yay -S --noconfirm ${to_install[*]}"
+    yay -S --noconfirm ${to_install[*]}
   fi
 } 
 
@@ -90,12 +90,6 @@ source /packages.conf
 
 info "Installing essential packages ..."
 install_packages "${ESSENTIALS[@]}"
-
-info "Installing oh-my-zsh..."
-run_as_user 'export RUNZSH=no CHSH=no && sh -c "$(curl -fsSL $BASE_URL/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
-
-info "Installing Powerlevel 10k..."
-install_packages "powerlevel10k"
 
 info "Installing drivers..."
 if rfkill list | grep -qi bluetooth || lsusb | grep -qi bluetooth || lspci | grep -qi bluetooth; then
