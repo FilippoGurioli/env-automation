@@ -16,20 +16,32 @@ enable_if_present() {
     fi
 }
 
+run_as_user() {
+	su - "$USER" -c "$@"
+}
+
 ########### Some useful functions ##############
 
+USER=$2
+
 echo "POST INSTALL SCRIPT"
+info "Setting sudo insults..."
+# Check if the line exists (commented or not), if not add it
+grep -q "^[[:space:]]*#*[[:space:]]*Defaults[[:space:]]\+insults" /etc/sudoers || echo "Defaults insults" >> /etc/sudoers
+
+# Then ensure it's uncommented
+sed -i 's/^[[:space:]]*#[[:space:]]*\(Defaults[[:space:]]\+insults\)/\1/' /etc/sudoers
 
 info "Adding user to necessary groups..."
-usermod -aG docker $1
-usermod -aG video $1
-usermod -aG audio $1
-usermod -aG input $1
+usermod -aG docker $USER
+usermod -aG video $USER
+usermod -aG audio $USER
+usermod -aG input $USER
 
 info "Enabling services..."
 systemctl enable NetworkManager
 systemctl enable sshd
-systemctl enable --user pipewire pipewire-pulse wireplumber
+run_as_user "systemctl enable --user pipewire pipewire-pulse wireplumber"
 
 enable_if_present "tlp" "tlp"
 enable_if_present "upower" "upower"

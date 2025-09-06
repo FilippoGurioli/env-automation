@@ -20,13 +20,12 @@ chmod +x ./bootstrap.sh
 
 USER="$2"
 
-curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/home/$USER/provision.sh
-chmod +x /mnt/home/$USER/provision.sh
-arch-chroot /mnt chown "$USER:$USER" "/home/$USER/provision.sh"
+curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
+chmod +x /mnt/provision.sh
 
-arch-chroot /mnt runuser -l "$USER" -c "sudo /home/$USER/provision.sh $@"
+arch-chroot /mnt /provision.sh $@
 
-rm /mnt/home/$USER/provision.sh
+rm /mnt/provision.sh
 
 umount -R /mnt
 

@@ -32,7 +32,7 @@ install_packages() {
 
   if [ ${#to_install[@]} -ne 0 ]; then
     echo "Installing: ${to_install[*]}"
-    yay -S --noconfirm "${to_install[@]}"
+    run_as_user "yay -S --noconfirm ${to_install[*]}"
   fi
 } 
 
@@ -45,6 +45,10 @@ is_laptop() {
 		esac
 	fi
 	return 1
+}
+
+run_as_user() {
+	su - "$USER" -c "$@"
 }
 
 ########### Some useful functions ##############
@@ -63,12 +67,11 @@ if ! command -v yay &> /dev/null; then
   pacman -S --needed git base-devel go --noconfirm
   
   info "Building yay as user..."
-#   su - "$USER" -c '
-      cd /tmp
-      git clone https://aur.archlinux.org/yay.git
-      cd yay
-      makepkg --noconfirm
-#   '
+  cd /tmp
+  git clone https://aur.archlinux.org/yay.git
+  chown -R "$USER:$USER" /tmp/yay
+  cd yay
+  run_as_user "cd /tmp/yay && makepkg --noconfirm"
   
   info "Installing yay as root..."
   pacman -U /tmp/yay/yay-*.pkg.tar.* --noconfirm
@@ -79,18 +82,17 @@ else
   info "yay is already installed"
 fi
 
-BASE_URL="https://raw.githubusercontent.com/FilippoGurioli/env-automation/dev/provision"
+BASE_URL="https://raw.githubusercontent.com"
+ENV_AUTO="$BASE_URL/FilippoGurioli/env-automation/dev/provision"
 
-curl -fsSL "$BASE_URL/packages.conf" -o /packages.conf
+curl -fsSL "$ENV_AUTO/packages.conf" -o /packages.conf
 source /packages.conf
 
 info "Installing essential packages ..."
 install_packages "${ESSENTIALS[@]}"
 
 info "Installing oh-my-zsh..."
-export RUNZSH=no   # don’t launch zsh after install
-export CHSH=no     # don’t change your default shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+run_as_user 'export RUNZSH=no CHSH=no && sh -c "$(curl -fsSL $BASE_URL/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
 
 info "Installing Powerlevel 10k..."
 install_packages "powerlevel10k"
@@ -137,7 +139,7 @@ fi
 
 info "ARCH PROVISIONING DONE"
 
-curl -fsSL "$BASE_URL/post-install.sh" -o /post-install.sh
+curl -fsSL "$ENV_AUTO/post-install.sh" -o /post-install.sh
 chmod +x /post-install.sh
 
 /post-install.sh $@
