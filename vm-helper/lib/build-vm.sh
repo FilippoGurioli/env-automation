@@ -6,9 +6,9 @@ virsh net-start default
 
 virt-install \
 	--name arch \
-	--ram 2048 \
+	--ram 4096 \
 	--vcpus 4 \
-	--disk path=/var/lib/libvirt/images/archlinux.qcow2,format=qcow2,size=20 \
+	--disk path=/var/lib/libvirt/images/archlinux.qcow2,format=qcow2,size=30 \
 	--cdrom /var/lib/libvirt/isos/archlinux-2025.08.01-x86_64.iso \
 	--os-variant archlinux \
 	--boot loader=/usr/share/edk2-ovmf/x64/OVMF_CODE.4m.fd,loader.readonly=yes,loader.type=pflash,nvram_template=/usr/share/edk2-ovmf/x64/OVMF_VARS.4m.fd \
