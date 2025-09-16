@@ -131,6 +131,18 @@ if is_laptop; then
 	install_packages "${LAPTOP[@]}"
 fi
 
+info "Installing audio packages ..."
+install_packages "${AUDIO_DRIVERS[@]}"
+
+info "Installing window manager and related packages..."
+install_packages "${WINDOW_MANAGER[@]}"
+
+info "Installing system utils..."
+install_packages "${SYSTEM_UTILS[@]}"
+
+info "Installing dev tools..."
+install_packages "${DEV_TOOLS[@]}"
+
 info "ARCH PROVISIONING DONE"
 
 curl -fsSL "$ENV_AUTO/post-install.sh" -o /post-install.sh
