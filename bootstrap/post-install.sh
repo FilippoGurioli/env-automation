@@ -1,7 +1,11 @@
-echo "Setting time zone"
+set -euo pipefail # fail fast strategy
+
+info "POST INSTALL SCRIPT"
+
+info "Setting time zone..."
 ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
 
-echo "Setting localization"
+info "Setting localization..."
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
 echo "it_IT.UTF-8 UTF-8" >> /etc/locale.gen
@@ -17,27 +21,29 @@ echo "LC_PAPER=it_IT.UTF-8" >> /etc/locale.conf
 echo "LC_TELEPHONE=it_IT.UTF-8" >> /etc/locale.conf
 echo "LC_TIME=it_IT.UTF-8" >> /etc/locale.conf
 
-NAME="arch-$1"
+HOSTNAME="arch-$1"
 
-echo "Setting hostname to $NAME"
-echo "$NAME" > /etc/hostname
+info "Setting hostname to $HOSTNAME..."
+echo "$HOSTNAME" > /etc/hostname
 
-echo "Setting hosts"
+info "Setting hosts..."
 echo "127.0.0.1 localhost" > /etc/hosts
 echo "::1 localhost" >> /etc/hosts
-echo "127.0.1.1 $NAME.localdomain $NAME" >> /etc/hosts
+echo "127.0.1.1 $HOSTNAME.localdomain $HOSTNAME" >> /etc/hosts
 
-echo "Setting the root password to $3"
-echo "root:$3" | chpasswd
+info "Setting the root password to $PASSWORD..."
+echo "root:$PASSWORD" | chpasswd
 
-echo "Creating user '$2' with password '$3'"
-useradd -m -G wheel -s /bin/bash "$2"
-echo "$2:$3" | chpasswd
+info "Creating user '$USER' with password '$PASSWORD'..."
+useradd -m -G wheel -s /bin/bash "$USER"
+echo "$USER:$PASSWORD" | chpasswd
 
-echo "Enabling sudo for wheel group"
+info "Enabling sudo for wheel group..."
 echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
 chmod 440 /etc/sudoers.d/wheel
 
-echo "Installing bootloader"
+info "Installing bootloader..."
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
+
+info "POST INSTALL SCRIPT COMPLETE"

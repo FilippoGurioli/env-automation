@@ -1,65 +1,10 @@
 #!/bin/bash
 
-########### Some useful functions ##############
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-info() { echo -e "[${GREEN}INF${NC}] $*"; }
-warning() { echo -e "[${YELLOW}WARN${NC}] $*"; }
-error() { echo -e "[${RED}ERR${NC}] $*"; }
-
-# Functions to check if a package is installed
-is_installed() {
-  pacman -Qi "$1" &> /dev/null
-}
-
-is_group_installed() {
-  pacman -Qg "$1" &> /dev/null
-}
-
-# Function to install packages if not already installed
-install_packages() {
-  local packages=("$@")
-  local to_install=()
-
-  for pkg in "${packages[@]}"; do
-    if ! is_installed "$pkg" && ! is_group_installed "$pkg"; then
-      to_install+=("$pkg")
-    fi
-  done
-
-  if [ ${#to_install[@]} -ne 0 ]; then
-    echo "Installing: ${to_install[*]}"
-    yay -S --noconfirm ${to_install[*]}
-  fi
-} 
-
-# Function to detect if the computer is a laptop
-is_laptop() {
-	if [[ -r /sys/class/dmi/id/chassis_type ]]; then
-		case "$(cat /sys/class/dmi/id/chassis_type)" in
-			8|9|10|14) return 0 ;;
-			*) return 1;;
-		esac
-	fi
-	return 1
-}
-
-run_as_user() {
-	su - "$USER" -c "$@"
-}
-
-########### Some useful functions ##############
-
 set -euo pipefail # fail fast strategy
-
-USER="$2"
 
 info "ARCH PROVISIONING SCRIPT"
 
-info "Updating the system"
+info "Updating the system..."
 pacman -Syu --noconfirm
 
 if ! command -v yay &> /dev/null; then
@@ -82,10 +27,7 @@ else
   info "yay is already installed"
 fi
 
-BASE_URL="https://raw.githubusercontent.com"
-ENV_AUTO="$BASE_URL/FilippoGurioli/env-automation/dev/provision"
-
-curl -fsSL "$ENV_AUTO/packages.conf" -o /packages.conf
+curl -fsSL "$BASE_URL/packages.conf" -o /packages.conf
 source /packages.conf
 
 info "Installing essential packages ..."
@@ -144,10 +86,3 @@ info "Installing dev tools..."
 install_packages "${DEV_TOOLS[@]}"
 
 info "ARCH PROVISIONING DONE"
-
-curl -fsSL "$ENV_AUTO/post-install.sh" -o /post-install.sh
-chmod +x /post-install.sh
-
-/post-install.sh $@
-
-rm /post-install.sh

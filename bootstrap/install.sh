@@ -1,32 +1,5 @@
 #!/usr/bin/env bash
 
-########### Some useful functions ##############
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-info() { echo -e "[${GREEN}INF${NC}] $*"; }
-warning() { echo -e "[${YELLOW}WARN${NC}] $*"; }
-error() { echo -e "[${RED}ERR${NC}] $*"; }
-
-########### Some useful functions ##############
-
-set -euo pipefail # fail fast strategy
-
-# Checking if the hostname is provided as first parameter
-if [ $# -ne 3 ]; then
-	error "provide the host name as first parameter (e.g. desktop/laptop/...), the user name as second and the password as third (for both)"
-	exit 1
-fi
-
-# Setting an env var to spot if is vm
-if grep -qEi 'qemu|vmware|virtualbox|kvm' /sys/class/dmi/id/sys_vendor 2>/dev/null; then
-	VM_ENV=1
-else
-	VM_ENV=0
-fi
-
 info "ARCH BOOTSTRAP INSTALL SCRIPT"
 
 info "Updating system clock"
@@ -104,10 +77,5 @@ else
 	done
 fi
 
-info "Changing root to /mnt"
-cp ./chroot-commands.sh /mnt/
-arch-chroot /mnt /bin/bash /chroot-commands.sh "$@"
-
-rm /mnt/chroot-commands.sh
 info "ARCH BOOTSTRAP DONE"
 exit 0

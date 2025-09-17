@@ -1,33 +1,9 @@
 #!/bin/bash
 
-########### Some useful functions ##############
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-info() { echo -e "[${GREEN}INF${NC}] $*"; }
-warning() { echo -e "[${YELLOW}WARN${NC}] $*"; }
-error() { echo -e "[${RED}ERR${NC}] $*"; }
-
-enable_if_present() {
-    if yay -Qi "$1" &> /dev/null; then
-        systemctl enable "$2"
-    fi
-}
-
-run_as_user() {
-	su - "$USER" -c "$@"
-}
-
-########### Some useful functions ##############
-
-USER=$2
-
 echo "POST INSTALL SCRIPT"
 
 info "Installing oh-my-zsh..."
-run_as_user 'export RUNZSH=no CHSH=no && sh -c "$(curl -fsSL $BASE_URL/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+run_as_user 'export RUNZSH=no CHSH=no && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
 
 info "Installing Powerlevel 10k..."
 yay powerlevel10k --noconfirm
