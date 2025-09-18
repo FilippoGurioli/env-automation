@@ -6,13 +6,13 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Information logging function
-info() { echo -e "[${GREEN}INF${NC}] $*"; }
+info() { echo "[INF] $*"; } # { echo -e "[${GREEN}INF${NC}] $*"; }
 
 # Warning logging function
-warning() { echo -e "[${YELLOW}WARN${NC}] $*"; }
+warning() { echo "[WARN] $*"; } # { echo -e "[${YELLOW}WARN${NC}] $*"; }
 
 # Error logging function
-error() { echo -e "[${RED}ERR${NC}] $*"; }
+error() { echo "[ERR] $*"; } # { echo -e "[${RED}ERR${NC}] $*"; }
 
 # Function to enable a systemd service if the package is installed
 enable_if_present() {

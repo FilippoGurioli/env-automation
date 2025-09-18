@@ -3,12 +3,12 @@
 set -euo pipefail # fail fast strategy
 
 # Checking connectivity
-info "Checking connectivity"
+echo "Checking connectivity"
 if ! ping -c 1 -W 2 8.8.8.8 &> /dev/null; then
-	error "No connection, aborting bootstrap install, re-launch this script once there is connectivity"
+	echo "No connection, aborting bootstrap install, re-launch this script once there is connectivity"
 	exit 1
 else
-	info "Connected, starting bootstrap install"
+	echo "Connected, starting bootstrap install"
 fi
 
 # Setting variables
