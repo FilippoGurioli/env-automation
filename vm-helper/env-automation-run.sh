@@ -16,11 +16,11 @@ fi
 
 "$SCRIPT_DIR/lib/wipe-vm.sh" && "$SCRIPT_DIR/lib/build-vm.sh" 
 
-FILEPATH="logs/$(date +'%Y-%m-%d_%H-%M-%S').log"
+LOGPATH="$SCRIPT_DIR/logs/$(date +'%Y-%m-%d_%H-%M-%S').log"
 
-touch "$FILEPATH"
+touch "$LOGPATH"
 
-"$SCRIPT_DIR/lib/launch-install.sh" "$HOST" "$USER" "$PASSWORD" > "$FILEPATH" 2>&1
+"$SCRIPT_DIR/lib/launch-install.sh" "$HOST" "$USER" "$PASSWORD" > "$LOGPATH" 2>&1
 
 virsh shutdown arch
 sleep 5 # waiting to shutdown correctly
