@@ -32,10 +32,13 @@ echo "Sourcing scripts..."
 source /mnt/utils.sh
 source ./bootstrap.sh
 
+# Form some freaking way utils.sh is not available anymore so I have to pull it again... (just a try)
+curl -fsSL "$BASE_URL/utils.sh" -o /mnt/utils.sh
+
 info "Launching arch-chroot scripts..."
-arch-chroot /mnt /bin/bash -c "source /utils.sh && /post-bootstrap.sh"
-# arch-chroot /mnt /bin/bash -c "source /utils.sh && /provision.sh"
-# arch-chroot /mnt /bin/bash -c "source /utils.sh && /post-provision.sh"
+arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh"
+# arch-chroot /mnt /bin/bash -c "source /utils.sh && source /provision.sh"
+# arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-provision.sh"
 
 info "Cleaning up..."
 rm /mnt/utils.sh
