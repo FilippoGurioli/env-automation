@@ -21,7 +21,7 @@ echo "LC_PAPER=it_IT.UTF-8" >> /etc/locale.conf
 echo "LC_TELEPHONE=it_IT.UTF-8" >> /etc/locale.conf
 echo "LC_TIME=it_IT.UTF-8" >> /etc/locale.conf
 
-HOSTNAME="arch-$1"
+HOSTNAME="arch-$HOST"
 
 info "Setting hostname to $HOSTNAME..."
 echo "$HOSTNAME" > /etc/hostname
