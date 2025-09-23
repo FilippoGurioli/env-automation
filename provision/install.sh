@@ -27,7 +27,7 @@ else
   info "yay is already installed"
 fi
 
-curl -fsSL "$BASE_URL/packages.conf" -o /packages.conf
+curl -fsSL "$BASE_URL/provision/packages.conf" -o /packages.conf
 source /packages.conf
 
 info "Installing essential packages ..."

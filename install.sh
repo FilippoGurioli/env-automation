@@ -44,7 +44,7 @@ arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh"
 arch-chroot /mnt /bin/bash -c "source /utils.sh && source /provision.sh"
 arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-provision.sh"
 
-info "Cleaning up..."
+info "Final clean up..."
 rm /mnt/utils.sh
 rm /bootstrap.sh
 rm /mnt/post-bootstrap.sh
