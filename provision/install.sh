@@ -73,7 +73,7 @@ if is_laptop; then
 	install_packages "${LAPTOP[@]}"
 fi
 
-info "Installing audio packages ..."
+info "Installing audio drivers..."
 install_packages "${AUDIO_DRIVERS[@]}"
 
 info "Installing window manager and related packages..."
