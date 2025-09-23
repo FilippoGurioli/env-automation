@@ -1,10 +1,3 @@
 # env-automation
 
-Repo for my env automation scripts
-
-ha fallito su xwaylandvideobridge.
-
-Probabilmente per una di queste cause:
-
-- running yay as sudo
-- bad connection
+The main install script must first download and source bootstrap and only after download and source evertything else. This is mandatory since the bootstrap script sets up the directory structure inside the /mnt.
