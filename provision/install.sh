@@ -69,7 +69,7 @@ else
 fi
 
 if is_laptop; then
-	echo "Detected a laptop computer, installing laptop specific packages..."
+	info "Detected a laptop computer, installing laptop specific packages..."
 	install_packages "${LAPTOP[@]}"
 fi
 
