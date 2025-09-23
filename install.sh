@@ -51,3 +51,5 @@ if [ $VM_ENV -eq 1 ]; then
 else
 	reboot
 fi
+
+exit 0

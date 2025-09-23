@@ -38,3 +38,4 @@ info "Setting zsh as default shell for $USER"
 chsh -s $(which zsh) $USER
 
 echo "POST INSTALL DONE"
+return 0

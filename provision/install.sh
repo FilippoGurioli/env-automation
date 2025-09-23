@@ -86,3 +86,4 @@ info "Installing dev tools..."
 install_packages "${DEV_TOOLS[@]}"
 
 info "ARCH PROVISIONING DONE"
+return 0

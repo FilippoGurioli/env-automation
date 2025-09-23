@@ -78,4 +78,4 @@ else
 fi
 
 info "ARCH BOOTSTRAP DONE"
-exit 0
+return 0
