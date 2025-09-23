@@ -22,30 +22,27 @@ else
 fi
 
 echo "Downloading scripts..."
-curl -fsSL "$BASE_URL/utils.sh" -o /mnt/utils.sh
+curl -fsSL "$BASE_URL/utils.sh" -o /mnt/root/utils.sh
 curl -fsSL "$BASE_URL/bootstrap/install.sh" -o bootstrap.sh
-curl -fsSL "$BASE_URL/bootstrap/post-install.sh" -o /mnt/post-bootstrap.sh
-curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
-curl -fsSL "$BASE_URL/provision/post-install.sh" -o /mnt/post-provision.sh
+curl -fsSL "$BASE_URL/bootstrap/post-install.sh" -o /mnt/root/post-bootstrap.sh
+curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/root/provision.sh
+curl -fsSL "$BASE_URL/provision/post-install.sh" -o /mnt/root/post-provision.sh
 
 echo "Sourcing scripts..."
-source /mnt/utils.sh
+source /mnt/root/utils.sh
 source ./bootstrap.sh
 
-# Form some freaking way utils.sh is not available anymore so I have to pull it again... (just a try)
-curl -fsSL "$BASE_URL/utils.sh" -o /mnt/utils.sh
-
 info "Launching arch-chroot scripts..."
-arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh"
-# arch-chroot /mnt /bin/bash -c "source /utils.sh && source /provision.sh"
-# arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-provision.sh"
+arch-chroot /mnt /bin/bash -c "source /root/utils.sh && source /root/post-bootstrap.sh"
+# arch-chroot /mnt /bin/bash -c "source /root/utils.sh && source /root/provision.sh"
+# arch-chroot /mnt /bin/bash -c "source /root/utils.sh && source /root/post-provision.sh"
 
 info "Cleaning up..."
-rm /mnt/utils.sh
+rm /mnt/root/utils.sh
 rm /bootstrap.sh
-rm /mnt/post-bootstrap.sh
-rm /mnt/provision.sh
-rm /mnt/post-provision.sh
+rm /mnt/root/post-bootstrap.sh
+rm /mnt/root/provision.sh
+rm /mnt/root/post-provision.sh
 
 umount -R /mnt
 
