@@ -1,16 +1,9 @@
 #!/bin/bash
 
-echo "POST INSTALL SCRIPT"
-
-info "Installing oh-my-zsh..."
-run_as_user 'export RUNZSH=no CHSH=no && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
-
-info "Installing Powerlevel 10k..."
-yay powerlevel10k --noconfirm
-
+info "POST INSTALL SCRIPT"
 
 info "Selecting the fastest 10 mirrors..."
-sudo reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 info "Setting sudo insults..."
 # Check if the line exists (commented or not), if not add it
@@ -28,14 +21,10 @@ usermod -aG input $USER
 info "Enabling services..."
 systemctl enable NetworkManager
 systemctl enable sshd
-run_as_user "systemctl enable --user pipewire pipewire-pulse wireplumber"
-
 enable_if_present "tlp" "tlp"
 enable_if_present "upower" "upower"
 enable_if_present "bluez" "bluetooth"
 
-info "Setting zsh as default shell for $USER"
-chsh -s $(which zsh) $USER
+info "POST INSTALL DONE"
 
-echo "POST INSTALL DONE"
 return 0

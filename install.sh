@@ -38,18 +38,24 @@ curl -fsSL "$BASE_URL/utils.sh" -o /mnt/utils.sh
 curl -fsSL "$BASE_URL/bootstrap/post-install.sh" -o /mnt/post-bootstrap.sh
 curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
 curl -fsSL "$BASE_URL/provision/post-install.sh" -o /mnt/post-provision.sh
+curl -fsSL "$BASE_URL/user-configs.sh" -o /mnt/user-configs.sh
 
-info "Launching arch-chroot scripts..."
-arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh"
-arch-chroot /mnt /bin/bash -c "source /utils.sh && source /provision.sh"
-arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-provision.sh"
+info "Launching post-bootstrap and provisioning scripts in arch-chroot..."
+arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh \
+								&& source /provision.sh && source /post-provision.sh"
+
+info "Launching user configuration script in arch-chroot as $USER..."
+chmod 755 /mnt/user-configs.sh # In order to be visible to the user
+arch-chroot /mnt /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
 
 info "Final clean up..."
-rm /mnt/utils.sh
+rm /utils.sh
 rm /bootstrap.sh
+rm /mnt/utils.sh
 rm /mnt/post-bootstrap.sh
 rm /mnt/provision.sh
 rm /mnt/post-provision.sh
+rm /mnt/user-configs.sh
 
 umount -R /mnt
 
