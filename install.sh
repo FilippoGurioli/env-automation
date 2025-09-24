@@ -25,13 +25,13 @@ echo "Downloading utils script..."
 curl -fsSL "$BASE_URL/utils.sh" -o /utils.sh
 
 echo "Sourcing utils script..."
-source ./utils.sh
+source /utils.sh
 
 info "Downloading bootstrap script..."
-curl -fsSL "$BASE_URL/bootstrap/install.sh" -o bootstrap.sh
+curl -fsSL "$BASE_URL/bootstrap/install.sh" -o /bootstrap.sh
 
 info "Sourcing bootstrap script..."
-source ./bootstrap.sh
+source /bootstrap.sh
 
 info "Downloading arch-chroot scripts..."
 curl -fsSL "$BASE_URL/utils.sh" -o /mnt/utils.sh
