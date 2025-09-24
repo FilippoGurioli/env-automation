@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
+if [ -n "$BUFF_LOG" ]; then
+  RED='\033[0;31m'
+  GREEN='\033[0;32m'
+  YELLOW='\033[1;33m'
+  NC='\033[0m'
+else
+  RED=''
+  GREEN=''
+  YELLOW=''
+  NC=''
+fi
 
 # Information logging function
-info() { echo "[INF] $*"; } # { echo -e "[${GREEN}INF${NC}] $*"; }
+info() { echo -e "[${GREEN}INF${NC}] $*"; }
 
 # Warning logging function
-warning() { echo "[WARN] $*"; } # { echo -e "[${YELLOW}WARN${NC}] $*"; }
+warning() { echo -e "[${YELLOW}WARN${NC}] $*"; }
 
 # Error logging function
-error() { echo "[ERR] $*"; } # { echo -e "[${RED}ERR${NC}] $*"; }
+error() { echo -e "[${RED}ERR${NC}] $*"; }
 
 # Function to enable a systemd service if the package is installed
 enable_if_present() {

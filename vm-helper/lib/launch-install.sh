@@ -13,4 +13,4 @@ done
 echo "Guest agent is ready!"
 
 echo "Launching install.sh"
-"$SCRIPT_DIR/arch-exec.sh" "curl -fsSL https://raw.githubusercontent.com/FilippoGurioli/env-automation/dev/install.sh | bash -s -- $@"
+"$SCRIPT_DIR/arch-exec.sh" "export BUFF_LOG=1 && curl -fsSL https://raw.githubusercontent.com/FilippoGurioli/env-automation/dev/install.sh | bash -s -- $@"
