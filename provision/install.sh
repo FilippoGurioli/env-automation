@@ -4,10 +4,6 @@ set -euo pipefail # fail fast strategy
 
 info "ARCH PROVISIONING SCRIPT"
 
-info "Setting $USER as passwordless sudoer"
-echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/pacman" > /etc/sudoers.d/99-pacman
-chmod 440 /etc/sudoers.d/99-pacman
-
 info "Updating the system..."
 pacman -Syu --noconfirm
 
@@ -88,9 +84,6 @@ install_packages "${SYSTEM_UTILS[@]}"
 
 info "Installing dev tools..."
 install_packages "${DEV_TOOLS[@]}"
-
-info "Unsetting $USER as passwordless sudoer"
-rm -f /etc/sudoers.d/99-pacman
 
 info "ARCH PROVISIONING DONE"
 return 0

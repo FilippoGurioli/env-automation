@@ -40,6 +40,10 @@ curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
 curl -fsSL "$BASE_URL/provision/post-install.sh" -o /mnt/post-provision.sh
 curl -fsSL "$BASE_URL/user-configs.sh" -o /mnt/user-configs.sh
 
+info "Setting $USER as passwordless sudoer"
+echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/pacman" > /etc/sudoers.d/99-pacman
+chmod 440 /etc/sudoers.d/99-pacman
+
 info "Launching post-bootstrap and provisioning scripts in arch-chroot..."
 arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh \
 								&& source /provision.sh && source /post-provision.sh"
@@ -47,6 +51,9 @@ arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh \
 info "Launching user configuration script in arch-chroot as $USER..."
 chmod 755 /mnt/user-configs.sh # In order to be visible to the user
 arch-chroot /mnt /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
+
+info "Unsetting $USER as passwordless sudoer"
+rm -f /etc/sudoers.d/99-pacman
 
 info "Final clean up..."
 rm /utils.sh
