@@ -53,8 +53,8 @@ install_packages() {
   done
 
   if [ ${#to_install[@]} -ne 0 ]; then
-    echo "Installing: ${to_install[*]}"
-    yay -S --noconfirm ${to_install[*]}
+    info "Installing: ${to_install[*]}"
+    run_as_user "yay -S --noconfirm ${to_install[*]}"
   fi
 } 
 
