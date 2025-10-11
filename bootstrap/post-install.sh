@@ -1,6 +1,6 @@
 set -euo pipefail # fail fast strategy
 
-info "POST INSTALL SCRIPT"
+info "POST BOOTSTRAP SCRIPT"
 
 info "Setting time zone..."
 ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
@@ -46,5 +46,5 @@ info "Installing bootloader..."
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
-info "POST INSTALL SCRIPT COMPLETE"
+info "POST BOOTSTRAP DONE"
 return 0

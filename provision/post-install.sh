@@ -1,6 +1,6 @@
 #!/bin/bash
 
-info "POST INSTALL SCRIPT"
+info "POST PROVISION SCRIPT"
 
 info "Selecting the fastest 10 mirrors..."
 reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
@@ -25,6 +25,6 @@ enable_if_present "tlp" "tlp"
 enable_if_present "upower" "upower"
 enable_if_present "bluez" "bluetooth"
 
-info "POST INSTALL DONE"
+info "POST PROVISION DONE"
 
 return 0
