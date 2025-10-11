@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -n "$BUFF_LOG" ]; then
+if [[ -v BUFF_LOG ]]; then
   RED=''
   GREEN=''
   YELLOW=''

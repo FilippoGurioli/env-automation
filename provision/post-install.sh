@@ -2,6 +2,9 @@
 
 info "POST PROVISION SCRIPT"
 
+info "Setting keymap to it..."
+localectl set-keymap it
+
 info "Selecting the fastest 10 mirrors..."
 reflector --country "Italy,Germany,Switzerland,France" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
