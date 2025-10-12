@@ -41,12 +41,20 @@ curl -fsSL "$BASE_URL/provision/post-install.sh" -o /mnt/post-provision.sh
 curl -fsSL "$BASE_URL/user-configs.sh" -o /mnt/user-configs.sh
 
 info "Launching post-bootstrap and provisioning scripts in arch-chroot..."
-arch-chroot /mnt /bin/bash -c "source /utils.sh && source /post-bootstrap.sh \
-								&& source /provision.sh && source /post-provision.sh"
+info "Creating passwordless sudoers for $USER inside the chroot (so provisioning can run without a tty)..."
+mkdir -p /mnt/etc/sudoers.d
+cat > /mnt/etc/sudoers.d/"$USER" <<EOF
+$USER ALL=(ALL) NOPASSWD:ALL
+EOF
+chmod 0440 /mnt/etc/sudoers.d/"$USER"
+
+# Export USER and BASE_URL into the chroot environment and run the provisioning scripts.
+# Using env -i ensures a clean environment inside arch-chroot with the required vars set.
+arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" /bin/bash -c "source /utils.sh && source /post-bootstrap.sh && source /provision.sh && source /post-provision.sh"
 
 info "Launching user configuration script in arch-chroot as $USER..."
 chmod 755 /mnt/user-configs.sh # In order to be visible to the user
-arch-chroot /mnt /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
+arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
 
 info "Final clean up..."
 rm /utils.sh
