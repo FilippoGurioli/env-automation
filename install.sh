@@ -48,13 +48,11 @@ $USER ALL=(ALL) NOPASSWD:ALL
 EOF
 chmod 0440 /mnt/etc/sudoers.d/"$USER"
 
-# Export USER and BASE_URL into the chroot environment and run the provisioning scripts.
-# Using env -i ensures a clean environment inside arch-chroot with the required vars set.
-arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" /bin/bash -c "source /utils.sh && source /post-bootstrap.sh && source /provision.sh && source /post-provision.sh"
+arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" HOST="$HOST" PASSWORD="$PASSWORD" /bin/bash -c "source /utils.sh && source /post-bootstrap.sh && source /provision.sh && source /post-provision.sh"
 
 info "Launching user configuration script in arch-chroot as $USER..."
 chmod 755 /mnt/user-configs.sh # In order to be visible to the user
-arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
+arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" HOST="$HOST" PASSWORD="$PASSWORD" /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
 
 info "Final clean up..."
 rm /utils.sh
