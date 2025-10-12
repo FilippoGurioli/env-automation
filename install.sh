@@ -33,19 +33,20 @@ curl -fsSL "$BASE_URL/bootstrap/install.sh" -o /bootstrap.sh
 info "Sourcing bootstrap script..."
 source /bootstrap.sh
 
-info "Downloading arch-chroot scripts..."
+info "Downloading chroot scripts..."
 curl -fsSL "$BASE_URL/utils.sh" -o /mnt/utils.sh
 curl -fsSL "$BASE_URL/bootstrap/post-install.sh" -o /mnt/post-bootstrap.sh
 curl -fsSL "$BASE_URL/provision/install.sh" -o /mnt/provision.sh
 curl -fsSL "$BASE_URL/provision/post-install.sh" -o /mnt/post-provision.sh
 curl -fsSL "$BASE_URL/user-configs.sh" -o /mnt/user-configs.sh
 
-info "Launching post-bootstrap and provisioning scripts in arch-chroot..."
-arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" HOST="$HOST" PASSWORD="$PASSWORD" /bin/bash -c "source /utils.sh && source /post-bootstrap.sh && source /provision.sh && source /post-provision.sh"
+info "Launching post-bootstrap as arch-chroot..."
+arch-chroot /mnt /usr/bin/env -i USER="$USER" HOST="$HOST" PASSWORD="$PASSWORD" \
+	/bin/bash -c "source /utils.sh && source /post-bootstrap.sh"
 
-info "Launching user configuration script in arch-chroot as $USER..."
+info "Launching user configuration script as $USER..."
 chmod 755 /mnt/user-configs.sh # In order to be visible to the user
-arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" HOST="$HOST" PASSWORD="$PASSWORD" /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
+arch-chroot /mnt /usr/bin/env -i USER="$USER" HOST="$HOST" PASSWORD="$PASSWORD" /bin/bash -c "source /utils.sh && run_as_user 'source /user-configs.sh'"
 
 info "Final clean up..."
 rm /utils.sh
