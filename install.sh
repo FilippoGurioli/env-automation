@@ -41,13 +41,6 @@ curl -fsSL "$BASE_URL/provision/post-install.sh" -o /mnt/post-provision.sh
 curl -fsSL "$BASE_URL/user-configs.sh" -o /mnt/user-configs.sh
 
 info "Launching post-bootstrap and provisioning scripts in arch-chroot..."
-info "Creating passwordless sudoers for $USER inside the chroot (so provisioning can run without a tty)..."
-mkdir -p /mnt/etc/sudoers.d
-cat > /mnt/etc/sudoers.d/"$USER" <<EOF
-$USER ALL=(ALL) NOPASSWD:ALL
-EOF
-chmod 0440 /mnt/etc/sudoers.d/"$USER"
-
 arch-chroot /mnt /usr/bin/env -i USER="$USER" BASE_URL="$BASE_URL" HOST="$HOST" PASSWORD="$PASSWORD" /bin/bash -c "source /utils.sh && source /post-bootstrap.sh && source /provision.sh && source /post-provision.sh"
 
 info "Launching user configuration script in arch-chroot as $USER..."

@@ -30,35 +30,15 @@ enable_if_present() {
 
 # Function to run a command as the specified user
 run_as_user() {
-  # Ensure USER is set
-  if [[ -z "${USER:-}" ]]; then
-    error "run_as_user: USER is not set"
-    return 1
-  fi
-
-  # Prefer runuser (doesn't require a TTY). Fall back to su if unavailable.
-  if command -v runuser &>/dev/null; then
-    # Use a login shell and allow shell expansions; run command via bash -lc
-    runuser -u "$USER" -- /bin/bash -lc "$@"
-  else
-    su - "$USER" -c "$@"
-  fi
+	su - "$USER" -c "$@"
 }
 
 # Functions to check if a package is installed
 is_installed() {
-  if command -v pacman &>/dev/null; then
-    pacman -Qi "$1" &> /dev/null
-  else
-    return 1
-  fi
+  pacman -Qi "$1" &> /dev/null
 }
 is_group_installed() {
-  if command -v pacman &>/dev/null; then
-    pacman -Qg "$1" &> /dev/null
-  else
-    return 1
-  fi
+  pacman -Qg "$1" &> /dev/null
 }
 
 # Function to install packages if not already installed
