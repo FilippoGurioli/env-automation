@@ -1,10 +1,8 @@
-# Project Refactor
+# Project Requirements
 
-Here I will explain how this project will be refactored.
+It follows the list of requirements for my own distro.
 
-## New requirements
-
-### Core Architecture
+## Core Architecture
 
 - **Language**: Rust
 - **Bootstrapping**: Runs on Arch ISO
@@ -12,25 +10,25 @@ Here I will explain how this project will be refactored.
 - **Output**: Generates lock file for near-reproducibility
 - **Extensions**: Fork-based, compile-time only
 
-### User Experience
+## User Experience
 
 - **Dry-run mode**: Preview changes before applying
 - **Progress reporting**: Real-time status updates
 - **Config validation**: Validate config before execution
 
-### Reliability & Safety
+## Reliability & Safety
 
 - **Rollback capabilities**: Automatic recovery on failure
 - **Hash verification**: Verify package integrity
 - **Arch snapshot support**: Frozen repository states for reproducibility
 
-### Advanced Features
+## Advanced Features
 
 - **Multiple machine profiles**: Desktop, laptop, server, etc.
 
-## Implementation phases
+# Implementation phases
 
-### Phase 1: MVP
+## Phase 1: MVP
 
 - Config file parsing (TOML/YAML)
 - Basic package installation via pacman
@@ -38,14 +36,14 @@ Here I will explain how this project will be refactored.
 - Dry-run mode
 - Progress reporting
 
-### Phase 2: Safety & Reproducibility
+## Phase 2: Safety & Reproducibility
 
 - Hash verification
 - Rollback mechanisms
 - Config validation
 - Arch snapshot support
 
-### Phase 3: Advanced Features
+## Phase 3: Advanced Features
 
 - Multiple machine profiles
 - Compile-time extension system
